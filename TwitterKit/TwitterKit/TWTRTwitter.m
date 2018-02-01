@@ -385,11 +385,36 @@ static TWTRTwitter *sharedTwitter;
     self.webAuthenticationFlow = [[TWTRWebAuthenticationFlow alloc] initWithSessionStore:self.sessionStore];
 
     [self.webAuthenticationFlow beginAuthenticationFlow:^(UIViewController *controller) {
+        // NOTE:
+        // If `viewController` is also a presentedViewController of other parent (presenting) view controller,
+        // `viewController.present()` will create a modal-on-modal view hierarchy,
+        // which sometimes occur in iOS app.
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
         [viewController presentViewController:navigationController animated:YES completion:nil];
+
+        printf("present %s", viewController.description.UTF8String);
     }
         completion:^(TWTRSession *session, NSError *error) {
+            printf("dismiss %s", viewController.description.UTF8String);
+
+            // NOTE:
+            // Then, if modal-on-modal gets dismissed by calling `viewController.dismiss()`,
+            // it will eventually close BOTH `viewController.presentedViewController (UINavigationController in this case)` and `viewController` itself.
+            //
+            // You can see this effect by observing `LoginViewController` also getting closed at same time.
             [viewController dismissViewControllerAnimated:YES completion:nil];
+
+            // To solve this modal-on-modal issue, it's safer to call `viewController.presentedViewController.dismiss()` instead.
+            //
+            // ```
+            // [viewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+            // ```
+            //
+            // See Also:
+            // [dismissViewControllerAnimated:completion: \- UIViewController \| Apple Developer Documentation](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621505-dismissviewcontrolleranimated)
+            //
+            // > The presenting view controller is responsible for dismissing the view controller it presented. If you call this method on the presented view controller itself, UIKit asks the presenting view controller to handle the dismissal.
+
             completion(session, error);
         }];
 }

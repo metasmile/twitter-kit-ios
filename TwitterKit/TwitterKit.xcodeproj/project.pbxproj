@@ -3268,9 +3268,9 @@
 					"$(inherited)",
 					"$(TARGET_BUILD_DIR)/Headers/",
 					"$(TARGET_BUILD_DIR)/PrivateHeaders/",
-					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/Headers",
-					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/PrivateHeaders",
-					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/$(PLATFORM_NAME)/include",
+					"$(DSTROOT)/usr/local/lib/Headers",
+					"$(DSTROOT)/usr/local/lib/PrivateHeaders",
+					"$(OBJROOT)/UninstalledProducts/iphoneos/include",
 				);
 			};
 			name = Debug;
@@ -3288,9 +3288,9 @@
 					"$(inherited)",
 					"$(TARGET_BUILD_DIR)/Headers/",
 					"$(TARGET_BUILD_DIR)/PrivateHeaders/",
-					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/Headers",
-					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/PrivateHeaders",
-					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/$(PLATFORM_NAME)/include",
+					"$(DSTROOT)/usr/local/lib/Headers",
+					"$(DSTROOT)/usr/local/lib/PrivateHeaders",
+					"$(OBJROOT)/UninstalledProducts/iphoneos/include",
 				);
 			};
 			name = Release;

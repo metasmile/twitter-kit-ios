@@ -3264,6 +3264,14 @@
 					"$(PROJECT_DIR)/../vendor",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TARGET_BUILD_DIR)/Headers/",
+					"$(TARGET_BUILD_DIR)/PrivateHeaders/",
+					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/Headers",
+					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/PrivateHeaders",
+					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/$(PLATFORM_NAME)/include",
+				);
 			};
 			name = Debug;
 		};
@@ -3275,6 +3283,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../vendor",
 					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TARGET_BUILD_DIR)/Headers/",
+					"$(TARGET_BUILD_DIR)/PrivateHeaders/",
+					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/Headers",
+					"$(BUILD_ROOT)/../InstallationBuildProductsLocation/usr/local/lib/PrivateHeaders",
+					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/$(PLATFORM_NAME)/include",
 				);
 			};
 			name = Release;

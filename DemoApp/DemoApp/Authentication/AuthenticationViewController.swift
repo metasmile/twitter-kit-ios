@@ -77,7 +77,9 @@ class AuthenticationViewController: UIViewController {
     // MARK: - Actions
 
     func home() {
-        delegate?.authenticationViewControllerDidTapHome(viewController: self)
+//        delegate?.authenticationViewControllerDidTapHome(viewController: self)
+
+        self.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Private Methods

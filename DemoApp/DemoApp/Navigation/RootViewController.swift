@@ -35,7 +35,9 @@ class RootViewController: UIViewController {
         let authenticationViewController = AuthenticationViewController()
         authenticationViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: authenticationViewController)
-        setCurrentViewController(with: navigationController)
+//        setCurrentViewController(with: navigationController)
+
+        present(navigationController, animated: true)
     }
 
     private func setCurrentViewController(with viewController: UIViewController) {

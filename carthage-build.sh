@@ -21,6 +21,7 @@ PRODUCTS_DIR="${WORKING_DIR}/Products"
 CART_DIR="${WORKING_DIR}/Carthage"
 ZIP_DIR="${PRODUCTS_DIR}/${VERSION_NUM}"
 ZIP_PATH="${ZIP_DIR}/framework.zip"
+TEMP_FRAMEWORK_PATH="${WORKING_DIR}/${MODULE_NAME}.framework.zip"
 
 cd "${PRODUCTS_DIR}"
 
@@ -32,11 +33,14 @@ fi
 cd "${WORKING_DIR}"
 
 carthage build --platform iOS --no-skip-current "${MODULE_NAME}"
+carthage archive
 
-echo ""
-echo "*** Creating framework.zip from Carthage directory ***"
-echo ""
-zip -r "${ZIP_PATH}" "Carthage"
+if [ ! -f "${TEMP_FRAMEWORK_PATH}" ]; then
+    echo "${TEMP_FRAMEWORK_PATH} does not exist"
+    exit 4
+fi
+
+mv "${TEMP_FRAMEWORK_PATH}" "${ZIP_PATH}"
 
 echo ""
 echo "*** Removing Carthage directory ***"

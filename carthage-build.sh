@@ -22,14 +22,14 @@ CART_DIR="${WORKING_DIR}/Carthage"
 ZIP_DIR="${PRODUCTS_DIR}/${VERSION_NUM}"
 ZIP_PATH="${ZIP_DIR}/framework.zip"
 
-cd ${PRODUCTS_DIR}
+cd "${PRODUCTS_DIR}"
 
 if [ ! -e "${ZIP_DIR}" ]; then
     mkdir "${ZIP_DIR}"
     echo "Create ${ZIP_DIR} directory"
 fi
 
-cd ${WORKING_DIR}
+cd "${WORKING_DIR}"
 
 carthage build --platform iOS --no-skip-current "${MODULE_NAME}"
 

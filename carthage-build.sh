@@ -1,11 +1,6 @@
 #!/bin/bash
 
-if [ "${1:?}" = "" ]; then
-    echo "Must set module name"
-    exit 1
-fi
-
-MODULE_NAME=${1:?}
+MODULE_NAME=${1:?"Must set module name"}
 PROJ_DIR="$(cd $(dirname $0) && pwd)"
 WORKING_DIR="${PROJ_DIR}/${MODULE_NAME}"
 VERSIONS_PATH="${PROJ_DIR}/versions"
@@ -15,10 +10,10 @@ if [ ! -f "${VERSIONS_PATH}" ]; then
     exit 2
 fi
 
-VERSION_NUM="$(cat ${VERSIONS_PATH} | grep ${MODULE_NAME} | grep -oe '\d.\d.\d')"
+VERSION_NUM=$(grep ${MODULE_NAME} "${VERSIONS_PATH}" | grep -oE '\d+.\d+.\d+')
 
 if [ "${VERSION_NUM}" = "" ]; then
-    echo "${MODULE_NAME} version does not find in ${VERSIONS_PATH}"
+    echo "${MODULE_NAME} version not found in ${VERSIONS_PATH}"
     exit 3
 fi
 

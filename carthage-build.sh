@@ -55,42 +55,24 @@ echo ""
 echo "*** Creating ${MODULE_NAME}.json ***"
 echo ""
 
-if [ -a "${TEMP_PATH}" ]; then
+if [ -f "${TEMP_PATH}" ]; then
     rm -f "${TEMP_PATH}"
 fi
 
-touch "${TEMP_PATH}"
-
-if [ -f "${JSON_PATH}" ]; then
-    while read line
-    do
-        # Ignore last line
-        if [ "${line}" != "}" ]; then
-
-            # If line has VERSION_NUM, not added
-            if [ "$(echo ${line} | grep ${VERSION_NUM})" = "" ]; then
-
-                if [ "${line}" = "{" ]; then
-                    echo "${line}" >> "${TEMP_PATH}"
-                else
-
-                    # If line does not have ',',  add to tail
-                    if [ "$(echo ${line} | grep ,)" = "" ]; then
-                        echo -e "\t${line}," >> "${TEMP_PATH}"
-                    else
-                        echo -e "\t${line}" >> "${TEMP_PATH}"
-                    fi
-                fi
-            fi
-        fi
-    done < "${JSON_PATH}"
+if [ -s "${JSON_PATH}" ]; then
+    if [ "$(grep "${VERSION_NUM}" "${JSON_PATH}")" = "" ]; then
+        # If version number does not exist, insert newline
+        sed -e 's/"$/",/g' -e '/^}$/d' "${JSON_PATH}" > "${TEMP_PATH}"
+        echo -e "\t\"${VERSION_NUM}\": \"${URL}\"\n}" >> "${TEMP_PATH}"
+    else
+        # If version number exists, replace line
+        REGEX="s|\"${VERSION_NUM}\": \(.*\)|\"${VERSION_NUM}\": \"${URL}\"|g"
+        sed -e "${REGEX}" "${JSON_PATH}" > "${TEMP_PATH}"
+    fi
+    mv "${TEMP_PATH}" "${JSON_PATH}"
 else
-    echo "{" >> "${TEMP_PATH}"
+    # Create Json file if file does not exist or is empty
+    echo -e "{\n\t\"${VERSION_NUM}\": \"${URL}\"\n}" > "${JSON_PATH}"
 fi
-
-echo -e "\t\"${VERSION_NUM}\": \"${URL}\"" >> "${TEMP_PATH}"
-echo "}" >> "${TEMP_PATH}"
-
-mv "${TEMP_PATH}" "${JSON_PATH}"
 
 echo "*** ${MODULE_NAME} build process finished ***"

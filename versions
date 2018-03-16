@@ -1,2 +1,8 @@
-TwitterKit 3.3.0
-TwitterCore 3.1.0
+Repository Version 3.1.1
+TwitterKit Version 3.3.1
+TwitterCore Version 3.1.1
+
+# https://github.com/twitter/twitter-kit-ios/blob/master/TwitterCore.json
+TwitterKit Upstream Version 3.1.0
+# https://github.com/twitter/twitter-kit-ios/blob/master/TwitterKit.json
+TwitterCore Upstream Version 3.3.0

@@ -10,25 +10,24 @@ if [ ! -f "${VERSIONS_PATH}" ]; then
     exit 2
 fi
 
-VERSION_NUM=$(grep ${MODULE_NAME} "${VERSIONS_PATH}" | grep -oE '\d+.\d+.\d+')
+MODULE_VERSION=$(grep "${MODULE_NAME} Version" "${VERSIONS_PATH}" | grep -oE '\d+.\d+.\d+')
 
-if [ "${VERSION_NUM}" = "" ]; then
+if [ "${MODULE_VERSION}" = "" ]; then
     echo "${MODULE_NAME} version not found in ${VERSIONS_PATH}"
     exit 3
 fi
 
-PRODUCTS_DIR="${WORKING_DIR}/Products"
-CART_DIR="${WORKING_DIR}/Carthage"
-ZIP_DIR="${PRODUCTS_DIR}/${VERSION_NUM}"
-ZIP_PATH="${ZIP_DIR}/framework.zip"
-TEMP_FRAMEWORK_PATH="${WORKING_DIR}/${MODULE_NAME}.framework.zip"
+VERSION_NUM=$(grep "Repository Version" "${VERSIONS_PATH}" | grep -oE '\d+.\d+.\d+')
 
-cd "${PRODUCTS_DIR}"
-
-if [ ! -e "${ZIP_DIR}" ]; then
-    mkdir "${ZIP_DIR}"
-    echo "Create ${ZIP_DIR} directory"
+if [ "${VERSION_NUM}" = "" ]; then
+    echo "Repository version not found in ${VERSIONS_PATH}"
+    exit 3
 fi
+
+PRODUCTS_DIR="${PROJ_DIR}/Products"
+CART_DIR="${WORKING_DIR}/Carthage"
+ZIP_PATH="${PRODUCTS_DIR}/${MODULE_NAME}.zip"
+TEMP_FRAMEWORK_PATH="${WORKING_DIR}/${MODULE_NAME}.framework.zip"
 
 cd "${WORKING_DIR}"
 
@@ -40,6 +39,10 @@ if [ ! -f "${TEMP_FRAMEWORK_PATH}" ]; then
     exit 4
 fi
 
+if [ ! -d "${PRODUCTS_DIR}" ]; then
+    mkdir "${PRODUCTS_DIR}"
+fi
+
 mv "${TEMP_FRAMEWORK_PATH}" "${ZIP_PATH}"
 
 echo ""
@@ -48,7 +51,7 @@ rm -rf ${CART_DIR}
 
 # Generate JSON file
 JSON_PATH="${PROJ_DIR}/${MODULE_NAME}.json"
-URL="https://github.com/abema/twitter-kit-ios/raw/develop/${MODULE_NAME}/Products/${VERSION_NUM}/framework.zip"
+URL="https://github.com/abema/twitter-kit-ios/releases/download/${VERSION_NUM}/${MODULE_NAME}.zip"
 TEMP_PATH="${WORKING_DIR}/temp.json"
 
 echo ""
@@ -60,19 +63,19 @@ if [ -f "${TEMP_PATH}" ]; then
 fi
 
 if [ -s "${JSON_PATH}" ]; then
-    if [ "$(grep "${VERSION_NUM}" "${JSON_PATH}")" = "" ]; then
+    if [ "$(grep "${MODULE_VERSION}" "${JSON_PATH}")" = "" ]; then
         # If version number does not exist, insert newline
         sed -e 's/"$/",/g' -e '/^}$/d' "${JSON_PATH}" > "${TEMP_PATH}"
-        echo -e "\t\"${VERSION_NUM}\": \"${URL}\"\n}" >> "${TEMP_PATH}"
+        echo -e "\t\"${MODULE_VERSION}\": \"${URL}\"\n}" >> "${TEMP_PATH}"
     else
         # If version number exists, replace line
-        REGEX="s|\"${VERSION_NUM}\": \(.*\)|\"${VERSION_NUM}\": \"${URL}\"|g"
+        REGEX="s|\"${MODULE_VERSION}\": \(.*\)|\"${MODULE_VERSION}\": \"${URL}\"|g"
         sed -e "${REGEX}" "${JSON_PATH}" > "${TEMP_PATH}"
     fi
     mv "${TEMP_PATH}" "${JSON_PATH}"
 else
     # Create Json file if file does not exist or is empty
-    echo -e "{\n\t\"${VERSION_NUM}\": \"${URL}\"\n}" > "${JSON_PATH}"
+    echo -e "{\n\t\"${MODULE_VERSION}\": \"${URL}\"\n}" > "${JSON_PATH}"
 fi
 
 echo "*** ${MODULE_NAME} build process finished ***"

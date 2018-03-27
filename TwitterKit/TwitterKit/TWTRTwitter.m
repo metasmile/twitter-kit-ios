@@ -349,6 +349,8 @@ static TWTRTwitter *sharedTwitter;
     TWTRParameterAssertOrReturn(completion);
     [self assertTwitterKitInitialized];
 
+    __weak UIViewController* weakVC = viewController;
+
     TWTRLoginURLParser *loginURLParser = [[TWTRLoginURLParser alloc] initWithAuthConfig:self.sessionStore.authConfig];
     if (![loginURLParser hasValidURLScheme]) {
         // Throws exception if the app does not have a valid scheme
@@ -367,7 +369,7 @@ static TWTRTwitter *sharedTwitter;
                 } else {
                     // There wasn't a Twitter app
                     [[TWTRTwitter sharedInstance].scribeSink didFailSSOLogin];
-                    [self performWebBasedLogin:viewController completion:completion];
+                    [self performWebBasedLogin:weakVC completion:completion];
                 }
             }
         }];
@@ -384,13 +386,20 @@ static TWTRTwitter *sharedTwitter;
 
     self.webAuthenticationFlow = [[TWTRWebAuthenticationFlow alloc] initWithSessionStore:self.sessionStore];
 
+    __weak typeof(self) weakSelf = self;
+    __weak UIViewController* weakVC = viewController;
+
     [self.webAuthenticationFlow beginAuthenticationFlow:^(UIViewController *controller) {
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [viewController presentViewController:navigationController animated:YES completion:nil];
+        [weakVC presentViewController:navigationController animated:YES completion:nil];
     }
         completion:^(TWTRSession *session, NSError *error) {
-            [viewController dismissViewControllerAnimated:YES completion:nil];
+            // Dismiss from `presentedViewController` so that `viewController` itself doesn't get dismissed
+            // when it is also a `presentedViewController` of another presenting (parent) view controller.
+            [weakVC.presentedViewController dismissViewControllerAnimated:YES completion:nil];
             completion(session, error);
+
+            weakSelf.webAuthenticationFlow = nil;
         }];
 }
 

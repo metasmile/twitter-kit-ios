@@ -137,10 +137,20 @@ static TWTRTwitter *sharedTwitter;
 
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
 {
-    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret accessGroup:nil];
+    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:nil accessGroup:nil];
+}
+
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix
+{
+    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:urlSchemeSuffix accessGroup:nil];
 }
 
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret accessGroup:(NSString *)accessGroup
+{
+    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:nil accessGroup:accessGroup];
+}
+
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix accessGroup:(NSString *)accessGroup
 {
     if (self.isInitialized) {
         return;
@@ -153,7 +163,7 @@ static TWTRTwitter *sharedTwitter;
     [self ensureResourcesBundleExists];
     [self setupAPIServiceConfigs];
 
-    self->_authConfig = [[TWTRAuthConfig alloc] initWithConsumerKey:consumerKey consumerSecret:consumerSecret];
+    self->_authConfig = [[TWTRAuthConfig alloc] initWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix: urlSchemeSuffix];
 
     NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
 

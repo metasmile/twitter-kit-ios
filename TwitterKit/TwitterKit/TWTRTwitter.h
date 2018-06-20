@@ -55,7 +55,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 
 /**
- *  Start Twitter with a consumer key, secret, and keychain access group. See -[TWTRTwitter startWithConsumerKey:consumerSecret:]
+ *  Start Twitter with your consumer key and secret. These will override any credentials
+ *  present in your applications Info.plist.
+ *
+ *  @param consumerKey    Your Twitter application's consumer key.
+ *  @param consumerSecret Your Twitter application's consumer secret.
+ *  @parama urlSchemeSuffix Custom suffix for callback url scheme
+ */
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix;
+
+/**
+ *  Start Twitter with a consumer key, secret, and keychain access group. See -[TWTRTwitter startWithConsumerKey:consumerSecret:urlSchemeSuffix:]
  *
  *  @param consumerKey    Your Twitter application's consumer key.
  *  @param consumerSecret Your Twitter application's consumer secret.
@@ -66,6 +76,20 @@ NS_ASSUME_NONNULL_BEGIN
  *  using TwitterKit with an app extension.
  */
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret accessGroup:(nullable NSString *)accessGroup;
+
+/**
+ *  Start Twitter with a consumer key, secret, and keychain access group. See -[TWTRTwitter startWithConsumerKey:consumerSecret:urlSchemeSuffix:]
+ *
+ *  @param consumerKey    Your Twitter application's consumer key.
+ *  @param consumerSecret Your Twitter application's consumer secret.
+ *  @param urlSchemeSuffix Custom suffix for callback url scheme
+ *  @param accessGroup    An optional keychain access group to apply to session objects stored in the keychain.
+ *
+ *  @note In the majority of situations applications will not need to specify an access group to use with Twitter sessions.
+ *  This value is only needed if you plan to share credentials with another application that you control or if you are
+ *  using TwitterKit with an app extension.
+ */
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix accessGroup:(nullable NSString *)accessGroup;
 
 /**
  *  The current version of this kit.

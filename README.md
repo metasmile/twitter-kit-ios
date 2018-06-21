@@ -23,6 +23,12 @@ Using Twitter Kit from source in production applications is not officially suppo
 * Access the Twitter API
   * API client for all interactions with the Twitter API.
 
+## Differences from Official
+
+* Custom URL scheme suffix support.
+* Fix modal-on-modal capturing presentingViewController bug.
+* Fix modal-on-modal dismiss bug.
+
 ## Components of Twitter Kit iOS
 
 * TwitterCore

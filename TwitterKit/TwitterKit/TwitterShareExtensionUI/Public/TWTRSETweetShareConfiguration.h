@@ -33,8 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TWTRSETweetShareConfiguration : NSObject
 
-@property (nonatomic, readonly, copy) NSArray<id<TWTRSEAccount>> *accounts;
-@property (nonatomic, readonly, nullable) id<TWTRSEAccount> initiallySelectedAccount;
+@property (nonatomic, copy) NSArray<id<TWTRSEAccount>> *accounts;
+@property (nonatomic, nullable) id<TWTRSEAccount> initiallySelectedAccount;
 @property (nonatomic, readonly, copy, nullable) TWTRSETweet *initialTweet;
 @property (nonatomic, readonly, nullable) id<TWTRSEGeoTagging> geoTagging;
 @property (nonatomic, readonly, nullable) id<TWTRSEAutoCompletion> autoCompletion;

@@ -19,9 +19,19 @@
 
 @class TWTRSETweetShareConfiguration;
 
-typedef NS_ENUM(NSUInteger, TWTRSETweetComposerTableViewDataSourceCellType) { TWTRSETweetComposerTableViewDataSourceCellTypeAccountSelector = 1, TWTRSETweetComposerTableViewDataSourceCellTypeLocationSelector };
+typedef NS_ENUM(NSUInteger, TWTRSETweetComposerTableViewDataSourceCellType) {
+    TWTRSETweetComposerTableViewDataSourceCellTypeAccountSelector = 1,
+    TWTRSETweetComposerTableViewDataSourceCellTypeLocationSelector,
+    TWTRSETweetComposerTableViewDataSourceCellTypeAddAccount
+};
 
-typedef NS_ENUM(NSUInteger, TWTRSETweetComposerTableViewDataSourceLocationStatus) { TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown = 1, TWTRSETweetComposerTableViewDataSourceLocationStatusNoPermission, TWTRSETweetComposerTableViewDataSourceLocationStatusPermissionApproved, TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation, TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired };
+typedef NS_ENUM(NSUInteger, TWTRSETweetComposerTableViewDataSourceLocationStatus) {
+    TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown = 1,
+    TWTRSETweetComposerTableViewDataSourceLocationStatusNoPermission,
+    TWTRSETweetComposerTableViewDataSourceLocationStatusPermissionApproved,
+    TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation,
+    TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired
+};
 
 NS_ASSUME_NONNULL_BEGIN
 

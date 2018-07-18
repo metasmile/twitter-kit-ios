@@ -33,6 +33,7 @@
 
 @property (nonatomic, nullable, weak) TWTRSEConfigurationSelectionTableViewCell *accountSelectionCell;
 @property (nonatomic, nullable, weak) TWTRSEConfigurationSelectionTableViewCell *locationSelectionCell;
+@property (nonatomic, nullable, weak) TWTRSEConfigurationSelectionTableViewCell *addAccountCell;
 
 @end
 
@@ -45,7 +46,7 @@
     if ((self = [super init])) {
         _initialTweet = [config.initialTweet copy] ?: [TWTRSETweet emptyTweet];
         _composedTweet = [_initialTweet copy];
-        _allowsAccountSelection = config.accounts.count > 1;
+        _allowsAccountSelection = config.accounts.count >= 1;
         _allowsGeoTagging = allowsGeoTagging;
         _locationStatus = TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown;
         _textSelection = (NSRange){.location = NSNotFound, .length = 0};
@@ -67,6 +68,8 @@
     if (self.allowsGeoTagging) {
         [types addObject:@(TWTRSETweetComposerTableViewDataSourceCellTypeLocationSelector)];
     }
+    
+    [types addObject:@(TWTRSETweetComposerTableViewDataSourceCellTypeAddAccount)];
 
     self.cellTypes = types;
 }
@@ -112,6 +115,11 @@
     self.locationSelectionCell.configurationName = [TSELocalized localizedString:TSEUI_LOCALIZABLE_SHARE_EXT_LOCATION];
     self.locationSelectionCell.currentConfigurationValue = locationNameToShow;
     self.locationSelectionCell.loading = loading;
+}
+
+- (void)configureAddAccountCell
+{
+    self.addAccountCell.configurationName = [TSELocalized localizedString:TSEUI_LOCALIZABLE_SHARE_EXT_ADD_ACCOUNT];
 }
 
 - (void)setLocationStatus:(TWTRSETweetComposerTableViewDataSourceLocationStatus)locationStatus
@@ -222,6 +230,15 @@
                 self.accountSelectionCell = nil;
             }
 
+            return cell;
+        }
+            
+        case TWTRSETweetComposerTableViewDataSourceCellTypeAddAccount: {
+            TWTRSEConfigurationSelectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TWTRSEConfigurationSelectionTableViewCell.reuseIdentifier forIndexPath:indexPath];
+            self.addAccountCell = cell;
+            
+            [self configureAddAccountCell];
+            
             return cell;
         }
     }

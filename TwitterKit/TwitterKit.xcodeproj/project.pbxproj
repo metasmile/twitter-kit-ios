@@ -2233,8 +2233,8 @@
 			isa = PBXGroup;
 			children = (
 				AAF0C9EC2011998F0057F438 /* TwitterShareExtensionUI.h */,
-				AAF0C9322011991B0057F438 /* Public */,
 				AAF0C94E2011991B0057F438 /* Private */,
+				AAF0C9322011991B0057F438 /* Public */,
 			);
 			path = TwitterShareExtensionUI;
 			sourceTree = "<group>";
@@ -2242,31 +2242,31 @@
 		AAF0C9322011991B0057F438 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				AAF0C9332011991B0057F438 /* TWTRSETweetShareViewControllerDelegate.h */,
-				AAF0C9352011991B0057F438 /* TWTRSEImageProvider.h */,
-				AAF0C9362011991B0057F438 /* TWTRSETweetShareViewController.m */,
-				AAF0C9372011991B0057F438 /* TWTRSETweet.h */,
-				AAF0C9382011991B0057F438 /* TWTRSEFonts.m */,
-				AAF0C9392011991B0057F438 /* TWTRSETweetURLAttachmentMetadata.m */,
-				AAF0C93A2011991B0057F438 /* TWTRSETweetShareConfiguration.h */,
-				AAF0C93B2011991B0057F438 /* TWTRSEGeoTagging.h */,
-				AAF0C93C2011991B0057F438 /* TWTRSELocalizedResources.h */,
-				AAF0C93D2011991B0057F438 /* TWTRSECardPreviewProvider.h */,
-				AAF0C93E2011991B0057F438 /* TWTRSETweetAttachment.h */,
-				AAF0C9402011991B0057F438 /* TWTRSEAutoCompletion.h */,
-				AAF0C9412011991B0057F438 /* TWTRSEImageDownloader.h */,
-				AAF0C9422011991B0057F438 /* TWTRSEGeoPlace.h */,
 				AAF0C9432011991B0057F438 /* TWTRSEAccount.h */,
-				AAF0C9442011991B0057F438 /* TWTRSEImageProvider.m */,
-				AAF0C9452011991B0057F438 /* TWTRSETweetShareConfiguration.m */,
-				AAF0C9462011991B0057F438 /* TWTRSETweetURLAttachmentMetadata.h */,
-				AAF0C9472011991B0057F438 /* TWTRSEWordRangeCalculator.h */,
+				AAF0C9402011991B0057F438 /* TWTRSEAutoCompletion.h */,
+				AAF0C93D2011991B0057F438 /* TWTRSECardPreviewProvider.h */,
 				AAF0C9482011991B0057F438 /* TWTRSEFonts.h */,
-				AAF0C9492011991B0057F438 /* TWTRSETweet.m */,
-				AAF0C94A2011991B0057F438 /* TWTRSETweetShareViewController.h */,
-				AAF0C94B2011991B0057F438 /* TWTRSETwitterUser.h */,
-				AAF0C94C2011991B0057F438 /* TWTRSETweetAttachment.m */,
+				AAF0C9382011991B0057F438 /* TWTRSEFonts.m */,
+				AAF0C9422011991B0057F438 /* TWTRSEGeoPlace.h */,
+				AAF0C93B2011991B0057F438 /* TWTRSEGeoTagging.h */,
+				AAF0C9412011991B0057F438 /* TWTRSEImageDownloader.h */,
+				AAF0C9352011991B0057F438 /* TWTRSEImageProvider.h */,
+				AAF0C9442011991B0057F438 /* TWTRSEImageProvider.m */,
+				AAF0C93C2011991B0057F438 /* TWTRSELocalizedResources.h */,
 				AAF0C94D2011991B0057F438 /* TWTRSENetworking.h */,
+				AAF0C9372011991B0057F438 /* TWTRSETweet.h */,
+				AAF0C9492011991B0057F438 /* TWTRSETweet.m */,
+				AAF0C93E2011991B0057F438 /* TWTRSETweetAttachment.h */,
+				AAF0C94C2011991B0057F438 /* TWTRSETweetAttachment.m */,
+				AAF0C93A2011991B0057F438 /* TWTRSETweetShareConfiguration.h */,
+				AAF0C9452011991B0057F438 /* TWTRSETweetShareConfiguration.m */,
+				AAF0C94A2011991B0057F438 /* TWTRSETweetShareViewController.h */,
+				AAF0C9362011991B0057F438 /* TWTRSETweetShareViewController.m */,
+				AAF0C9332011991B0057F438 /* TWTRSETweetShareViewControllerDelegate.h */,
+				AAF0C9462011991B0057F438 /* TWTRSETweetURLAttachmentMetadata.h */,
+				AAF0C9392011991B0057F438 /* TWTRSETweetURLAttachmentMetadata.m */,
+				AAF0C94B2011991B0057F438 /* TWTRSETwitterUser.h */,
+				AAF0C9472011991B0057F438 /* TWTRSEWordRangeCalculator.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -2314,17 +2314,17 @@
 		AAF0C95E2011991B0057F438 /* Composer */ = {
 			isa = PBXGroup;
 			children = (
-				AAF0C95F2011991B0057F438 /* TWTRSETweetTextViewContainer.m */,
-				AAF0C9602011991B0057F438 /* TWTRSETweetComposerViewController.h */,
-				AAF0C9612011991B0057F438 /* TWTRSETweetComposerTableViewDataSource.m */,
-				AAF0C9622011991B0057F438 /* TWTRSEConfigurationSelectionTableViewCell.m */,
-				AAF0C9632011991B0057F438 /* TWTRSETweetTextView.h */,
-				AAF0C9642011991B0057F438 /* TWTRSETweetComposerViewController.m */,
-				AAF0C9652011991B0057F438 /* TWTRSETweetTextViewContainer.h */,
-				AAF0C9662011991B0057F438 /* TWTRSETweetComposerTableViewDataSource.h */,
 				AAF0C9672011991B0057F438 /* Attachment Views */,
-				AAF0C9722011991B0057F438 /* TWTRSETweetTextView.m */,
 				AAF0C9732011991B0057F438 /* TWTRSEConfigurationSelectionTableViewCell.h */,
+				AAF0C9622011991B0057F438 /* TWTRSEConfigurationSelectionTableViewCell.m */,
+				AAF0C9662011991B0057F438 /* TWTRSETweetComposerTableViewDataSource.h */,
+				AAF0C9612011991B0057F438 /* TWTRSETweetComposerTableViewDataSource.m */,
+				AAF0C9602011991B0057F438 /* TWTRSETweetComposerViewController.h */,
+				AAF0C9642011991B0057F438 /* TWTRSETweetComposerViewController.m */,
+				AAF0C9632011991B0057F438 /* TWTRSETweetTextView.h */,
+				AAF0C9722011991B0057F438 /* TWTRSETweetTextView.m */,
+				AAF0C9652011991B0057F438 /* TWTRSETweetTextViewContainer.h */,
+				AAF0C95F2011991B0057F438 /* TWTRSETweetTextViewContainer.m */,
 			);
 			path = Composer;
 			sourceTree = "<group>";

@@ -92,6 +92,7 @@
 
 #pragma mark imports
 
+#import "TWTRComposerAccount.h"
 #import "TWTRSETweetComposerViewController.h"
 #import "TWTRBirdView.h"
 #import "TWTRSEAccount.h"
@@ -110,6 +111,7 @@
 #import "TWTRSETweetShareViewControllerDelegate.h"
 #import "TWTRSETweetTextViewContainer.h"
 #import "TWTRSEUIBundle.h"
+#import "TWTRTwitter.h"
 #import "UIView+TSEExtensions.h"
 
 #import <TwitterCore/TWTRColorUtil.h>
@@ -748,6 +750,33 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     }
 }
 
+-(NSArray *)existingAccounts
+{
+    NSMutableArray<TWTRComposerAccount *> *accounts = [NSMutableArray array];
+    
+    TWTRSessionStore *sessionStore = [TWTRTwitter sharedInstance].sessionStore;
+    NSArray *currentSessions = [sessionStore existingUserSessions];
+    for (TWTRSession *session in currentSessions) {
+        [accounts addObject:accountFromSession(session)];
+    }
+    
+    return accounts;
+}
+
+- (void)_tseui_handleAddAccountRowTap
+{
+    [[TWTRTwitter sharedInstance] logInWithCompletion:^(TWTRSession * _Nullable session, NSError * _Nullable error) {
+        if (session) {
+            NSArray *accounts = [self existingAccounts];
+            self.configuration.accounts = accounts;
+            self.configuration.initiallySelectedAccount = accounts.lastObject;
+            self.selectedAccount = accounts.lastObject;
+            self.dataSource.currentAccountUsername = session.userName;
+            [self.tableView reloadData];
+        }
+    }];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -764,6 +793,12 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
             [self _tseui_handleLocationSelectionRowTap];
             [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 
+            return;
+        }
+            
+        case TWTRSETweetComposerTableViewDataSourceCellTypeAddAccount: {
+            [self _tseui_handleAddAccountRowTap];
+            [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
             return;
         }
     }

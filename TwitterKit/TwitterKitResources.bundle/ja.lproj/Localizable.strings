@@ -24,6 +24,8 @@
 
 "SHARE_EXT_NONE_VALUE" = "なし";
 
+"SHARE_EXT_ADD_ACCOUNT" = "アカウントを追加";
+
 "SHARE_EXT_NO_ACCOUNTS_MESSAGE" = "Twitterアカウントが設定されていません。設定からTwitterアカウントを追加するか、新規登録してください。";
 
 "SHARE_EXT_NO_ACCOUNTS_SIGN_IN_MESSAGE" = "Twitterアカウントが設定されていません。Twitterアプリでアカウントを新規登録するか、ログインしてください。";

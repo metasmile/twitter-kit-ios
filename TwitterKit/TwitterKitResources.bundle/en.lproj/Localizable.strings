@@ -113,6 +113,8 @@
 "SHARE_EXT_NO_ACCOUNTS_TITLE" = "No Twitter Account";
 /* "None" */
 "SHARE_EXT_NONE_VALUE" = "None";
+/* "Add Account" */
+"SHARE_EXT_ADD_ACCOUNT" = "Add Account";
 /* "Tweet failed to send" */
 "SHARE_EXT_TWEET_FAILED_TITLE" = "Tweet failed to send.";
 /* "Twitter" */

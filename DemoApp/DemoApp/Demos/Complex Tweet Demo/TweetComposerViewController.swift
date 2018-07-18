@@ -130,15 +130,15 @@ class TweetComposerViewController: UIViewController {
 
 extension TweetComposerViewController: TWTRComposerViewControllerDelegate {
     func composerDidCancel(_ controller: TWTRComposerViewController) {
-        dismiss(animated: false, completion: nil)
+//        dismiss(animated: false, completion: nil)
     }
 
     func composerDidFail(_ controller: TWTRComposerViewController, withError error: Error) {
-        dismiss(animated: false, completion: nil)
+//        dismiss(animated: false, completion: nil)
     }
 
     func composerDidSucceed(_ controller: TWTRComposerViewController, with tweet: TWTRTweet) {
-        dismiss(animated: false, completion: nil)
+//        dismiss(animated: false, completion: nil)
     }
 }
 

@@ -80,7 +80,7 @@ UIImage *videoThumbnail(NSURL *url)
 
     // Shared Composer
     TWTRSETweetShareConfiguration *config = [[TWTRSETweetShareConfiguration alloc] initWithInitialTweet:tweet accounts:accounts initiallySelectedAccount:[accounts lastObject] geoTagging:nil autoCompletion:nil cardPreviewProvider:nil imageDownloader:[self imageLoader] localizedResources:[TWTRLocalizedResources class] networking:self.networking twitterText:[TWTRTwitterText class] wordRangeCalculator:[NSString class] delegate:self];
-
+    
     self = [super initWithConfiguration:config];
 
     return self;
@@ -190,13 +190,19 @@ UIImage *videoThumbnail(NSURL *url)
 - (void)didFinishSendingTweet:(TWTRTweet *)tweet
 {
     NSLog(@"Did successfully send Tweet: %@", tweet);
-    [self.delegate composerDidSucceed:(TWTRComposerViewController *)self withTweet:tweet];
+    __weak typeof(self) weakSelf = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [weakSelf.delegate composerDidSucceed:(TWTRComposerViewController *)weakSelf withTweet:tweet];
+    }];
 }
 
 - (void)didAbortSendingTweetWithError:(NSError *)error
 {
     NSLog(@"Did encounter error sending Tweet: %@", error);
-    [self.delegate composerDidFail:(TWTRComposerViewController *)self withError:error];
+    __weak typeof(self) weakSelf = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [weakSelf.delegate composerDidFail:(TWTRComposerViewController *)weakSelf withError:error];
+    }];
 }
 
 @end

@@ -25,6 +25,12 @@ Using Twitter Kit from source in production applications is not officially suppo
 * Access the Twitter API
   * API client for all interactions with the Twitter API.
 
+## Differences from Official
+
+* Custom URL scheme suffix support.
+* Fix modal-on-modal capturing presentingViewController bug.
+* Fix modal-on-modal dismiss bug.
+
 ## Components of Twitter Kit iOS
 
 * TwitterCore
@@ -44,30 +50,35 @@ Using Twitter Kit from source in production applications is not officially suppo
 	
 ### Install using Cocoapods
 
-To add Twitter Kit to your app, simply add `TwitterKit` to your Podfile.
+This unoficial fork can **not** install from CocoaPods repository.  
+So, to add TwitterKit, should specify the podspec directly.  
+Specify the version you want install to {version you want to install} in the path.  
+For more information about how to set up CocoaPods and your Podfile, see [here](https://guides.cocoapods.org/).
 
 ```ruby
 target 'MyApp' do
   use_frameworks!
-  pod 'TwitterKit'
+  pod 'TwitterKit', podspec: 'https://raw.githubusercontent.com/matsune/twitter-kit-ios/{version you want to install}/TwitterKit.podspec'
+  pod 'TwitterCore', podspec: 'https://raw.githubusercontent.com/matsune/twitter-kit-ios/{version you want to install}/TwitterCore.podspec'
 end
 ```
 
 ### Install using Carthage
 
-To install Twitter Kit for iOS using Carthage, add the following lines to your Cartfile. For more information about how to set up Carthage and your Cartfile, see [here](https://github.com/Carthage/Carthage).
+To install Twitter Kit for iOS using Carthage, add the following lines to your Cartfile.  
+Specify the version you want install to {version you want to install} in the path.  
+For more information about how to set up Carthage and your Cartfile, see [here](https://github.com/Carthage/Carthage).
 
-```swift
-binary "https://ton.twimg.com/syndication/twitterkit/ios/TwitterKit.json"
-binary "https://ton.twimg.com/syndication/twitterkit/ios/TwitterCore.json"
+```
+binary "https://raw.githubusercontent.com/matsune/twitter-kit-ios/master/TwitterCore.json" == {version you want to install}
+binary "https://raw.githubusercontent.com/matsune/twitter-kit-ios/master/TwitterKit.json" == {version you want to install}
 ```
 
-After running `carthage update`, add `TwitterKit.framework` and `TwitterShareExtensionUI.framework` to the `Linked Frameworks and Binaries` section under General of your App target. In addition to that, make sure that when you are adding the copy-frameworks run script for Carthage that you add the following input paths: 
+After running `carthage update`, add `TwitterKit.framework` to the `Linked Frameworks and Binaries` section under General of your App target. In addition to that, make sure that when you are adding the copy-frameworks run script for Carthage that you add the following input paths: 
 
 ```swift
 $(SRCROOT)/Carthage/Build/iOS/TwitterCore.framework
 $(SRCROOT)/Carthage/Build/iOS/TwitterKit.framework
-$(SRCROOT)/Carthage/Build/iOS/TwitterShareExtensionUI.framework
 ```
 
 Make sure that the run script phase is after your Link Binaries with Libraries phase to prevent issues with properly archiving your iOS application.

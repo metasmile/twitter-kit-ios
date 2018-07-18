@@ -95,6 +95,10 @@ class LoginViewController: UIViewController {
 
     // MARK: - UIViewController
 
+    deinit {
+        print("===> [deinit] \(self) \(Thread.current)")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

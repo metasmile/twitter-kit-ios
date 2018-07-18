@@ -133,10 +133,20 @@ static TWTRTwitter *sharedTwitter;
 
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
 {
-    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret accessGroup:nil];
+    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:nil accessGroup:nil];
+}
+
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix
+{
+    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:urlSchemeSuffix accessGroup:nil];
 }
 
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret accessGroup:(NSString *)accessGroup
+{
+    [self startWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:nil accessGroup:accessGroup];
+}
+
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix accessGroup:(NSString *)accessGroup
 {
     if (self.isInitialized) {
         return;
@@ -149,7 +159,7 @@ static TWTRTwitter *sharedTwitter;
     [self ensureResourcesBundleExists];
     [self setupAPIServiceConfigs];
 
-    self->_authConfig = [[TWTRAuthConfig alloc] initWithConsumerKey:consumerKey consumerSecret:consumerSecret];
+    self->_authConfig = [[TWTRAuthConfig alloc] initWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix: urlSchemeSuffix];
 
     NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
 
@@ -333,9 +343,8 @@ static TWTRTwitter *sharedTwitter;
                     // The user tapped "Cancel"
                     completion(session, error);
                 } else {
-                    typeof(weakViewController) strongViewController = weakViewController;
                     // There wasn't a Twitter app
-                    [self performWebBasedLogin:strongViewController completion:completion];
+                    [self performWebBasedLogin:weakViewController completion:completion];
                 }
             }
         }];
@@ -352,20 +361,19 @@ static TWTRTwitter *sharedTwitter;
 
     self.webAuthenticationFlow = [[TWTRWebAuthenticationFlow alloc] initWithSessionStore:self.sessionStore];
 
-    __weak typeof(viewController) weakViewController = viewController;
+    __weak typeof(self) weakSelf = self;
+    __weak UIViewController* weakVC = viewController;
+
     [self.webAuthenticationFlow beginAuthenticationFlow:^(UIViewController *controller) {
-        __strong typeof(weakViewController) strongViewController = weakViewController;
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [strongViewController presentViewController:navigationController animated:YES completion:nil];
+        [weakVC presentViewController:navigationController animated:YES completion:nil];
     }
         completion:^(TWTRSession *session, NSError *error) {
-            /**
-                Grab the top view controller here since the top most view controller should be the
-                web view controller at this point in the login cycle otherwise this would dismiss
-                the view controller below it.
-             */
-            [[TWTRUtils topViewController] dismissViewControllerAnimated:YES completion:nil];
+            // Dismiss from `presentedViewController` so that `viewController` itself doesn't get dismissed
+            // when it is also a `presentedViewController` of another presenting (parent) view controller.
+            [weakVC.presentedViewController dismissViewControllerAnimated:YES completion:nil];
             completion(session, error);
+            weakSelf.webAuthenticationFlow = nil;
         }];
 }
 

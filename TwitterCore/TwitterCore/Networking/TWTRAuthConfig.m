@@ -21,6 +21,7 @@
 
 @property (nonatomic, copy, readwrite) NSString *consumerKey;
 @property (nonatomic, copy, readwrite) NSString *consumerSecret;
+@property (nonatomic, copy, readwrite, nullable) NSString *urlSchemeSuffix;
 
 @end
 
@@ -28,11 +29,17 @@
 
 - (instancetype)initWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
 {
+    return [self initWithConsumerKey:consumerKey consumerSecret:consumerSecret urlSchemeSuffix:nil];
+}
+
+- (instancetype)initWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret urlSchemeSuffix:(nullable NSString *)urlSchemeSuffix
+{
     NSParameterAssert(consumerKey);
     NSParameterAssert(consumerSecret);
     if ((self = [super init])) {
         _consumerKey = [consumerKey copy];
         _consumerSecret = [consumerSecret copy];
+        _urlSchemeSuffix = [urlSchemeSuffix copy];
     }
     return self;
 }
@@ -41,14 +48,16 @@
 {
     NSString *key = [coder decodeObjectForKey:@"consumerKey"];
     NSString *secret = [coder decodeObjectForKey:@"consumerSecret"];
+    NSString *urlSchemeSuffix = [coder decodeObjectForKey:@"urlSchemeSuffix"];
 
-    return [self initWithConsumerKey:key consumerSecret:secret];
+    return [self initWithConsumerKey:key consumerSecret:secret urlSchemeSuffix:urlSchemeSuffix];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.consumerKey forKey:@"consumerKey"];
     [coder encodeObject:self.consumerSecret forKey:@"consumerSecret"];
+    [coder encodeObject:self.urlSchemeSuffix forKey:@"urlSchemeSuffix"];
 }
 
 - (BOOL)isEqual:(id)object
@@ -61,7 +70,14 @@
 
 - (BOOL)isEqualToAuthConfig:(TWTRAuthConfig *)otherAuthConfig
 {
-    return [self.consumerKey isEqualToString:otherAuthConfig.consumerKey] && [self.consumerSecret isEqualToString:otherAuthConfig.consumerSecret];
+    if (self.urlSchemeSuffix == nil && otherAuthConfig.urlSchemeSuffix == nil) {
+        return [self.consumerKey isEqualToString:otherAuthConfig.consumerKey]
+        && [self.consumerSecret isEqualToString:otherAuthConfig.consumerSecret];
+    } else {
+        return [self.urlSchemeSuffix isEqualToString:otherAuthConfig.urlSchemeSuffix]
+        && [self.consumerKey isEqualToString:otherAuthConfig.consumerKey]
+        && [self.consumerSecret isEqualToString:otherAuthConfig.consumerSecret];
+    }
 }
 
 - (NSUInteger)hash

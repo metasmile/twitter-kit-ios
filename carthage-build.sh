@@ -51,7 +51,7 @@ rm -rf ${CART_DIR}
 
 # Generate JSON file
 JSON_PATH="${PROJ_DIR}/${MODULE_NAME}.json"
-URL="https://github.com/abema/twitter-kit-ios/releases/download/${VERSION_NUM}/${MODULE_NAME}.zip"
+URL="https://github.com/matsune/twitter-kit-ios/releases/download/${VERSION_NUM}/${MODULE_NAME}.zip"
 TEMP_PATH="${WORKING_DIR}/temp.json"
 
 echo ""
